@@ -134,6 +134,16 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .sidebar-header .select-trigger {
+    background-color: transparent;
+    border-color: var(--sidebar-border);
+  }
+
+  .sidebar-header .select-content {
+    background-color: var(--sidebar-background);
+    border-color: var(--sidebar-border);
+  }
 }
 
 @layer base {

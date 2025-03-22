@@ -39,8 +39,10 @@ export default function RootLayout({
             <SidebarProvider>
               <AppSidebar />
               <main>
-                <SidebarTrigger />
-                {children}
+                <div className="p-4">
+                  <SidebarTrigger />
+                  {children}
+                </div>
               </main>
             </SidebarProvider>
           </ConvexClientProvider>
