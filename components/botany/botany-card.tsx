@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { extractImageUrl } from "@/lib/utils";
 import type { Doc } from "../../convex/_generated/dataModel";
+import { useState } from "react";
 
 type Plant = Doc<"botany">;
 
@@ -14,19 +15,26 @@ interface PlantCardProps {
 }
 
 export function BotanyCard({ plant }: PlantCardProps) {
-  const imageUrl = extractImageUrl(plant.img, "1000");
+  const [imageSrc, setImageSrc] = useState(
+    plant.img.length === 0
+      ? "/cal_academy.png"
+      : extractImageUrl(plant.img, "500"),
+  );
 
   return (
     <Link href={`/botany/${plant._id}`} className="group block h-full">
       <Card className="overflow-hidden h-full transition-all hover:shadow-lg duration-300 border-none">
         <div className="relative aspect-[4/3] bg-muted/10 w-full">
-          {imageUrl && (
+          {imageSrc && (
             <Image
-              src={imageUrl}
+              src={imageSrc}
               alt={plant.fullName}
               fill
+              priority
+              loading="eager"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+              onError={() => setImageSrc("/cal_academy.png")}
             />
           )}
         </div>
