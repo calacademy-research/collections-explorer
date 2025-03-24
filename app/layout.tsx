@@ -3,7 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  SidebarInset,
+} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 
 const geistSans = Geist({
@@ -33,17 +37,17 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex`}
         >
           <ConvexClientProvider>
             <SidebarProvider>
               <AppSidebar />
-              <main>
-                <div className="p-4">
+              <SidebarInset>
+                <div className="p-4 max-w-full overflow-x-hidden">
                   <SidebarTrigger />
                   {children}
                 </div>
-              </main>
+              </SidebarInset>
             </SidebarProvider>
           </ConvexClientProvider>
         </body>
