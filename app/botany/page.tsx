@@ -15,9 +15,11 @@ export default function Botany() {
 
   const render = () => {
     return (
-      <div className="w-full">
-        {renderSearch()}
-        {renderSearchResults()}
+      <div className="w-full min-h-screen bg-gradient-to-b from-white to-gray-50/50">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {renderSearch()}
+          {renderSearchResults()}
+        </div>
       </div>
     );
   };
@@ -26,65 +28,97 @@ export default function Botany() {
     const renderSearchInputAndButton = () => {
       return (
         <div className="relative flex-1">
-          <Input
-            type="text"
-            placeholder="Search botanical specimens..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-4 pr-10 py-6 text-lg rounded-lg"
-          />
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-xl blur-xl group-hover:blur-2xl transition duration-500"></div>
+            <Input
+              type="text"
+              placeholder="Search botanical specimens..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="relative w-full pl-4 pr-10 py-6 text-lg rounded-lg bg-white/80 backdrop-blur-sm border-green-600/20 hover:border-green-600/30 transition-colors duration-300 placeholder:text-gray-400"
+            />
+          </div>
           <Button
             size="icon"
             variant="ghost"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-green-50 transition-colors duration-300"
           >
-            <Search className="h-5 w-5" />
+            <Search className="h-5 w-5 text-green-700" />
           </Button>
         </div>
       );
     };
 
     return (
-      <>
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">Botany Collection Search</h1>
-          <p className="text-muted-foreground">
+      <div className="relative">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 right-0 h-72 w-72 rounded-full bg-green-100/30 blur-3xl"></div>
+          <div className="absolute -top-20 left-0 h-72 w-72 rounded-full bg-emerald-100/30 blur-3xl"></div>
+        </div>
+
+        <div className="text-center mb-12 space-y-4">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-green-700 to-emerald-700 bg-clip-text text-transparent">
+            Botany Collection Search
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Explore our extensive database of botanical specimens
           </p>
         </div>
-        <div className="max-w-2xl mx-auto">
-          <div className="flex gap-2">
+
+        <div className="max-w-2xl mx-auto mb-8">
+          <div className="flex gap-3">
             {renderSearchInputAndButton()}
             <FilterSheet
               onApplyFilters={(filters) => {
-                // Handle filter application here
                 console.log("Applied filters:", filters);
               }}
             />
           </div>
         </div>
-      </>
+      </div>
     );
   };
 
   const renderSearchResults = () => {
     return (
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 gap-4 auto-rows-fr">
-        {plants === undefined ? (
-          <div className="col-span-full flex justify-center py-12">
-            <div className="animate-pulse text-muted-foreground">
-              Loading specimens...
-            </div>
+      <div className="relative">
+        {/* Results count */}
+        {plants && plants.length > 0 && (
+          <div className="mb-6 text-gray-600">
+            Showing{" "}
+            <span className="font-medium text-green-700">{plants.length}</span>{" "}
+            specimens
           </div>
-        ) : plants.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-muted-foreground">
-            No specimens found matching your search.
-          </div>
-        ) : (
-          plants.map((plant) => <BotanyCard key={plant._id} plant={plant} />)
         )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 auto-rows-fr">
+          {plants === undefined ? (
+            <div className="col-span-full flex justify-center py-16">
+              <div className="animate-pulse text-gray-500 flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+              </div>
+            </div>
+          ) : plants.length === 0 ? (
+            <div className="col-span-full text-center py-16">
+              <div className="text-gray-500 space-y-2">
+                <p className="text-lg">
+                  No specimens found matching your search.
+                </p>
+                <p className="text-sm">
+                  Try adjusting your search terms or filters.
+                </p>
+              </div>
+            </div>
+          ) : (
+            plants.map((plant) => <BotanyCard key={plant._id} plant={plant} />)
+          )}
+        </div>
       </div>
     );
   };
+
   return render();
 }
