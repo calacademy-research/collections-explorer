@@ -17,7 +17,7 @@ export function BotanyCard({ plant }: PlantCardProps) {
   const imageUrl = extractImageUrl(plant.img, "1000");
 
   return (
-    <Link href={`/plants/${plant._id}`} className="group block h-full">
+    <Link href={`/botany/${plant._id}`} className="group block h-full">
       <Card className="overflow-hidden h-full transition-all hover:shadow-lg duration-300 border-none">
         <div className="relative aspect-[4/3] bg-muted/10 w-full">
           {imageUrl && (
