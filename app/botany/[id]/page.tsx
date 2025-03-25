@@ -235,12 +235,16 @@ export default function PlantPage() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Button className="gap-2">
-                <Download className="h-4 w-4" />
-                Download Specimen Data
-              </Button>
-
-              <Button variant="outline" className="gap-2">
+              <Button 
+                variant="outline" 
+                className="gap-2" 
+                onClick={() => {
+                  const highResUrl = extractImageUrl(plant.img, "2000");
+                  if (highResUrl) {
+                    window.open(highResUrl, '_blank');
+                  }
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4"
@@ -256,16 +260,6 @@ export default function PlantPage() {
                   />
                 </svg>
                 View High-Res Images
-              </Button>
-
-              <Button variant="outline" className="gap-2">
-                <Search className="h-4 w-4" />
-                Find Similar Specimens
-              </Button>
-
-              <Button variant="outline" className="gap-2">
-                <ExternalLink className="h-4 w-4" />
-                View in GBIF
               </Button>
             </div>
           </div>
