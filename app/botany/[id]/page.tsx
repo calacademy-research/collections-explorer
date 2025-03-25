@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "convex/react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
+import { extractImageUrl } from "@/lib/utils";
 import { Calendar, Download, ExternalLink, MapPin, Search } from "lucide-react";
 
 const PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23f3f4f6'/%3E%3Cpath d='M15 25h10M10 15h20' stroke='%239ca3af' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E";
@@ -16,15 +17,20 @@ export default function PlantPage() {
   const params = useParams();
   const plantId = params.id as Id<"botany">;
   const [selectedImage, setSelectedImage] = useState(0);
+  const [imageSrc, setImageSrc] = useState("/cal_academy.png");
 
   const plant = useQuery(api.botany.getPlantById, { id: plantId });
+
+  useEffect(() => {
+    if (plant && plant.img && plant.img.length > 0) {
+      const url = extractImageUrl(plant.img, "500");
+      if (url) setImageSrc(url);
+    }
+  }, [plant]);
 
   if (!plant) {
     return <div>Loading...</div>;
   }
-
-  // Convert the single image to an array for consistency with the design
-  const images = plant.img ? [plant.img] : [];
 
   // Validate image URL
   const getValidImageUrl = (url: string) => {
@@ -34,6 +40,8 @@ export default function PlantPage() {
       return PLACEHOLDER_IMAGE;
     }
   };
+
+  const images = plant.img.length > 0 ? [imageSrc] : ["/cal_academy.png"];
 
   return (
     <div className="flex flex-col min-h-screen">
