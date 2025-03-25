@@ -1,18 +1,30 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { BotanyCard } from "@/components/botany/botany-card";
 import { FilterSheet } from "@/components/botany/filter-sheet";
+import { useSearchParams } from "next/navigation";
 
 export default function Botany() {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
+  // Handle search query from URL
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) {
+      setQuery(q);
+      setSearchQuery(q);
+      setIsSearching(true);
+    }
+  }, [searchParams]);
 
   // Default plants query
   const defaultPlants = useQuery(api.botany.getPlants, { qty: 30 });

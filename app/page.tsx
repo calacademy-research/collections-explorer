@@ -4,9 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ExploreSection from "@/components/ExploreSection";
-import SearchBar from '@/components/SearchBar';
+import SearchBar from '@/components/search-bar';
+import { useRouter } from 'next/navigation';
 
-const HeroSection: React.FC = () => {
+const GlobalSearch: React.FC = () => {
+  const router = useRouter();
   const sectionRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -34,8 +36,10 @@ const HeroSection: React.FC = () => {
   }, []);
   
   const handleSearch = (query: string) => {
-    console.log('Searching for:', query);
-    // Implement search functionality
+    if (query.trim()) {
+      // Navigate to botany page with search query
+      router.push(`/botany?q=${encodeURIComponent(query)}`);
+    }
   };
   
   return (
@@ -77,7 +81,7 @@ const HeroSection: React.FC = () => {
           </div>
           
           <div className="flex flex-wrap items-center justify-center gap-4 animation-delay-600 animate-slide-up">
-            <Button className="rounded-full px-8 py-6 h-auto text-base animated-button" onClick={() => window.location.href = '/explorer'}>
+            <Button className="rounded-full px-8 py-6 h-auto text-base animated-button" onClick={() => router.push('/botany')}>
               Start Exploring
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
@@ -101,7 +105,7 @@ const HeroSection: React.FC = () => {
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      <GlobalSearch />
       <ExploreSection />
     </>
   );
