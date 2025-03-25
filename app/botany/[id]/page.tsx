@@ -9,9 +9,10 @@ import { Id } from "@/convex/_generated/dataModel";
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { extractImageUrl } from "@/lib/utils";
-import { Calendar, Download, ExternalLink, MapPin, Search } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 
-const PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23f3f4f6'/%3E%3Cpath d='M15 25h10M10 15h20' stroke='%239ca3af' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E";
+const PLACEHOLDER_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23f3f4f6'/%3E%3Cpath d='M15 25h10M10 15h20' stroke='%239ca3af' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E";
 
 export default function PlantPage() {
   const params = useParams();
@@ -35,7 +36,7 @@ export default function PlantPage() {
   // Validate image URL
   const getValidImageUrl = (url: string) => {
     try {
-      return url && url.startsWith('http') ? url : PLACEHOLDER_IMAGE;
+      return url && url.startsWith("http") ? url : PLACEHOLDER_IMAGE;
     } catch {
       return PLACEHOLDER_IMAGE;
     }
@@ -101,12 +102,16 @@ export default function PlantPage() {
 
               <div className="grid grid-cols-2 gap-y-4">
                 <div>
-                  <p className="text-sm text-muted-foreground">Catalog Number</p>
+                  <p className="text-sm text-muted-foreground">
+                    Catalog Number
+                  </p>
                   <p className="font-medium">{plant.catalogNumber}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground">Alt. Catalog Number</p>
+                  <p className="text-sm text-muted-foreground">
+                    Alt. Catalog Number
+                  </p>
                   <p className="font-medium">{plant.altCatalogNumber}</p>
                 </div>
 
@@ -129,7 +134,9 @@ export default function PlantPage() {
               <h1 className="text-3xl font-bold text-[#4b5320] mb-1">
                 <span className="italic">{plant.fullName}</span>
               </h1>
-              <p className="text-xl text-muted-foreground italic mb-4">{plant.fullName}</p>
+              <p className="text-xl text-muted-foreground italic mb-4">
+                {plant.fullName}
+              </p>
             </div>
 
             <div className="grid grid-cols-3 gap-6">
@@ -162,7 +169,9 @@ export default function PlantPage() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground">Collection Date</p>
+                  <p className="text-sm text-muted-foreground">
+                    Collection Date
+                  </p>
                   <p className="font-medium">{plant.verbatimDate}</p>
                 </div>
 
@@ -172,7 +181,9 @@ export default function PlantPage() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground">Determination Date</p>
+                  <p className="text-sm text-muted-foreground">
+                    Determination Date
+                  </p>
                   <p className="font-medium">{plant.determinedDate}</p>
                 </div>
               </div>
@@ -196,7 +207,9 @@ export default function PlantPage() {
                 </div>
 
                 <div>
-                  <p className="text-sm text-muted-foreground">State/Province</p>
+                  <p className="text-sm text-muted-foreground">
+                    State/Province
+                  </p>
                   <p className="font-medium">{plant.state}</p>
                 </div>
 
@@ -223,7 +236,8 @@ export default function PlantPage() {
                 <div className="col-span-2">
                   <p className="text-sm text-muted-foreground">Elevation</p>
                   <p className="font-medium">
-                    {plant.minElevation}-{plant.maxElevation} {plant.originalElevationUnit}
+                    {plant.minElevation}-{plant.maxElevation}{" "}
+                    {plant.originalElevationUnit}
                   </p>
                 </div>
               </div>
@@ -235,13 +249,13 @@ export default function PlantPage() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Button 
-                variant="outline" 
-                className="gap-2" 
+              <Button
+                variant="outline"
+                className="gap-2"
                 onClick={() => {
                   const highResUrl = extractImageUrl(plant.img, "2000");
                   if (highResUrl) {
-                    window.open(highResUrl, '_blank');
+                    window.open(highResUrl, "_blank");
                   }
                 }}
               >
@@ -268,7 +282,10 @@ export default function PlantPage() {
 
       <footer className="border-t py-8 bg-muted/30">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} California Academy of Sciences. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} California Academy of Sciences. All
+            rights reserved.
+          </p>
         </div>
       </footer>
     </div>
