@@ -10,8 +10,38 @@ import { BotanyCard } from "@/components/botany/botany-card";
 import { FilterSheet } from "@/components/botany/filter-sheet";
 
 export default function Botany() {
-  const plants = useQuery(api.botany.getPlants, { qty: 30 });
   const [query, setQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Default plants query
+  const defaultPlants = useQuery(api.botany.getPlants, { qty: 30 });
+  // Search query
+  const searchResults = useQuery(
+    api.botany.searchPlants,
+    isSearching
+      ? {
+          query: searchQuery,
+          category: "all",
+          limit: 30,
+        }
+      : "skip",
+  );
+
+  const plantsToShow = isSearching ? searchResults : defaultPlants;
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      setSearchQuery(query);
+      setIsSearching(true);
+    }
+  };
+
+  const clearSearch = () => {
+    setIsSearching(false);
+    setSearchQuery("");
+    setQuery("");
+  };
 
   const render = () => {
     return (
@@ -35,12 +65,19 @@ export default function Botany() {
               placeholder="Search botanical specimens..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSearch();
+                }
+              }}
               className="relative w-full pl-4 pr-10 py-6 text-lg rounded-lg bg-white/80 backdrop-blur-sm border-green-600/20 hover:border-green-600/30 transition-colors duration-300 placeholder:text-gray-400"
             />
           </div>
           <Button
             size="icon"
             variant="ghost"
+            onClick={handleSearch}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer hover:bg-green-50 transition-colors duration-300"
           >
             <Search className="h-5 w-5 text-green-700" />
@@ -84,16 +121,30 @@ export default function Botany() {
     return (
       <div className="relative">
         {/* Results count */}
-        {plants && plants.length > 0 && (
+        {plantsToShow && plantsToShow.length > 0 && (
           <div className="mb-6 text-gray-600">
             Showing{" "}
-            <span className="font-medium text-green-700">{plants.length}</span>{" "}
+            <span className="font-medium text-green-700">
+              {plantsToShow.length}
+            </span>{" "}
             specimens
+            {isSearching && (
+              <>
+                {" "}
+                for "<span className="text-green-700">{searchQuery}</span>"
+                <button
+                  onClick={clearSearch}
+                  className="ml-2 text-sm text-green-600 hover:text-green-700 underline"
+                >
+                  Clear search
+                </button>
+              </>
+            )}
           </div>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 auto-rows-fr">
-          {plants === undefined ? (
+          {plantsToShow === undefined ? (
             <div className="col-span-full flex justify-center py-16">
               <div className="animate-pulse text-gray-500 flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
@@ -101,7 +152,7 @@ export default function Botany() {
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
               </div>
             </div>
-          ) : plants.length === 0 ? (
+          ) : plantsToShow.length === 0 ? (
             <div className="col-span-full text-center py-16">
               <div className="text-gray-500 space-y-2">
                 <p className="text-lg">
@@ -113,7 +164,9 @@ export default function Botany() {
               </div>
             </div>
           ) : (
-            plants.map((plant) => <BotanyCard key={plant._id} plant={plant} />)
+            plantsToShow.map((plant) => (
+              <BotanyCard key={plant._id} plant={plant} />
+            ))
           )}
         </div>
       </div>
