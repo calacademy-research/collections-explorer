@@ -1,47 +1,27 @@
-# Welcome to your Convex + Next.js + Convex Auth app
+# CAS Collections Explorer
 
-This is a [Convex](https://convex.dev/) project created with [`npm create convex`](https://www.npmjs.com/package/create-convex).
+The CAS collection explorer is a collaboration with the California Academy of Sciences to build web apps for their specimens database. The collections explorer allows for advanced search and beautiful presentation of the data.
 
-After the initial setup (<2 minutes) you'll have a working full-stack app using:
+The explorer is built in Next.js for the front end (React.js Framework), and Convex, an open source reactive backend great for web application and search use.
 
-- Convex as your backend (database, server logic)
-- [React](https://react.dev/) as your frontend (web page interactivity)
-- [Next.js](https://nextjs.org/) for optimized web hosting and page routing
-- [Tailwind](https://tailwindcss.com/) for building great looking accessible UI
-- [Convex Auth](https://labs.convex.dev/auth) for authentication
+This repo is only the Next.js front end, and it uses Convex cloud hosting. However, Convex is capable of self hosting, and we will have a separate repository for fully self hosting and on-prem hosting.
 
 ## Get started
 
-If you just cloned this codebase and didn't use `npm create convex`, run:
+To start, install all the packages. We highly recommend using `yarn` for everything
 
 ```
-npm install
-npm run dev
+yarn install
 ```
 
-If you're reading this README on GitHub and want to use this template, run:
+To start a dev instance, run
 
 ```
-npm create convex@latest -- -t nextjs-convexauth
+yarn dev
 ```
 
-## Learn more
+This will spin up your local instance of the Next.js front end and spin up sync with Convex cloud
 
-To learn more about developing your project with Convex, check out:
+## Setting up Convex Cloud
 
-- The [Tour of Convex](https://docs.convex.dev/get-started) for a thorough introduction to Convex principles.
-- The rest of [Convex docs](https://docs.convex.dev/) to learn about all Convex features.
-- [Stack](https://stack.convex.dev/) for in-depth articles on advanced topics.
-- [Convex Auth docs](https://labs.convex.dev/auth) for documentation on the Convex Auth library.
-
-## Configuring other authentication methods
-
-To configure different authentication methods, see [Configuration](https://labs.convex.dev/auth/config) in the Convex Auth docs.
-
-## Join the community
-
-Join thousands of developers building full-stack apps with Convex:
-
-- Join the [Convex Discord community](https://convex.dev/community) to get help in real-time.
-- Follow [Convex on GitHub](https://github.com/get-convex/), star and contribute to the open-source implementation of Convex.
-# cas-collections-explorer
+Reach out to Matthew to set up Convex Cloud. To set that up, Matthew will invite you to the convex CAS Explorers team and create a dev cloud instance. Matthew will then provide you env keys to hook up this project to a cloud Convex instance.
