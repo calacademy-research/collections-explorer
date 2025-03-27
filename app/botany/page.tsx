@@ -19,6 +19,16 @@ export default function Botany() {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [isSearching, setIsSearching] = useState(!!initialQuery);
 
+  // Handle search query from URL
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) {
+      setQuery(q);
+      setSearchQuery(q);
+      setIsSearching(true);
+    }
+  }, [searchParams]);
+
   // Default plants query
   const defaultPlants = useQuery(api.botany.getPlants, { qty: 30 });
   // Search query
