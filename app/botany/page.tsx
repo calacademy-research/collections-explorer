@@ -37,7 +37,6 @@ export default function Botany() {
     isSearching
       ? {
           query: searchQuery,
-          category: "all",
           limit: 30,
         }
       : "skip",
