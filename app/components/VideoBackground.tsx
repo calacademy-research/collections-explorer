@@ -1,11 +1,15 @@
 import { useEffect, useRef } from 'react';
+import { Id } from '../../convex/_generated/dataModel';
+import { useQuery } from 'convex/react';
+import { api } from '../../convex/_generated/api';
 
 interface VideoBackgroundProps {
-  videoSrc: string;
+  storageId: Id<'_storage'>;
 }
 
-const VideoBackground: React.FC<VideoBackgroundProps> = ({ videoSrc }) => {
+const VideoBackground: React.FC<VideoBackgroundProps> = ({ storageId }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoUrl = useQuery(api.videos.getVideoUrl, { storageId });
 
   useEffect(() => {
     // Force video play on mount
@@ -19,8 +23,14 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({ videoSrc }) => {
       }
     };
     
-    playVideo();
-  }, []);
+    if (videoUrl) {
+      playVideo();
+    }
+  }, [videoUrl]);
+
+  if (!videoUrl) {
+    return null;
+  }
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -36,7 +46,7 @@ const VideoBackground: React.FC<VideoBackgroundProps> = ({ videoSrc }) => {
         style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }}
         onError={(e) => console.error('Video error:', e)}
       >
-        <source src={videoSrc} type="video/mp4" />
+        <source src={videoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
