@@ -1,24 +1,27 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { BotanyCard } from "@/components/botany/botany-card";
 import { FilterSheet } from "@/components/botany/filter-sheet";
-import { useSearchParams } from "next/navigation";
 
 export default function Botany() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
+  const initialQuery = searchParams.get("query") || "";
+
+  const [query, setQuery] = useState(initialQuery);
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [isSearching, setIsSearching] = useState(!!initialQuery);
 
   // Handle search query from URL
   useEffect(() => {
-    const q = searchParams.get('q');
+    const q = searchParams.get("q");
     if (q) {
       setQuery(q);
       setSearchQuery(q);
@@ -46,6 +49,7 @@ export default function Botany() {
     if (query.trim()) {
       setSearchQuery(query);
       setIsSearching(true);
+      router.push(`/botany?query=${encodeURIComponent(query)}`);
     }
   };
 
@@ -53,7 +57,15 @@ export default function Botany() {
     setIsSearching(false);
     setSearchQuery("");
     setQuery("");
+    router.push("/botany");
   };
+
+  useEffect(() => {
+    if (initialQuery) {
+      setSearchQuery(initialQuery);
+      setIsSearching(true);
+    }
+  }, [initialQuery]);
 
   const render = () => {
     return (
@@ -143,7 +155,7 @@ export default function Botany() {
             {isSearching && (
               <>
                 {" "}
-                for "<span className="text-green-700">{searchQuery}</span>"
+                for <span className="text-green-700">{`"${searchQuery}"`}</span>
                 <button
                   onClick={clearSearch}
                   className="ml-2 text-sm text-green-600 hover:text-green-700 underline"
