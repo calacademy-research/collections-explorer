@@ -59,14 +59,11 @@ export default defineSchema({
   botany: defineTable(Plant)
     .searchIndex("search_fullName", {
       searchField: "fullName",
-      filterFields: ["country", "collectors"],
     })
     .searchIndex("search_country", {
       searchField: "country",
-      filterFields: ["fullName", "collectors"],
     })
     .searchIndex("search_collectors", {
       searchField: "collectors",
-      filterFields: ["fullName", "country"],
     }),
 });
