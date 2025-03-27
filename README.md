@@ -25,3 +25,5 @@ This will spin up your local instance of the Next.js front end and spin up sync 
 ## Setting up Convex Cloud
 
 Reach out to Matthew to set up Convex Cloud. To set that up, Matthew will invite you to the convex CAS Explorers team and create a dev cloud instance. Matthew will then provide you env keys to hook up this project to a cloud Convex instance.
+
+TEST
