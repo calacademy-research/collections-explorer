@@ -6,9 +6,8 @@ import { Button } from '@/components/ui/button';
 import ExploreSection from "@/components/ExploreSection";
 import SearchBar from '@/components/search-bar';
 import { useRouter } from 'next/navigation';
-import VideoBackground from './components/VideoBackground';
+import BackgroundImage from './components/BackgroundImage';
 import Link from 'next/link';
-import { Id } from '../convex/_generated/dataModel';
 
 const collections = [
   { title: "Botany", href: "/botany" },
@@ -59,7 +58,7 @@ const GlobalSearch: React.FC = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-32"
       style={{ zIndex: 1 }}
     >
-      <VideoBackground storageId={"kg2a9n8mb5s8ssnrrdg0yk4v897cx6ce" as Id<"_storage">} />
+      <BackgroundImage />
       
       <div className="container mx-auto px-4 relative z-[2]">
         <div className="max-w-4xl mx-auto text-center">
