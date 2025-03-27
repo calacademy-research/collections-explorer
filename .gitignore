@@ -42,3 +42,10 @@ next-env.d.ts
 
 # Ignored for the template, you probably want to remove it:
 package-lock.json
+
+# video files
+*.mp4
+*.mov
+*.avi
+*.mkv
+public/videos/
