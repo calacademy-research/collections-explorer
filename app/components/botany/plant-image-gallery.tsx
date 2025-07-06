@@ -27,7 +27,7 @@ export function PlantImageGallery({ plant, imageSrc }: PlantImageGalleryProps) {
       <div className="aspect-[4/3] bg-muted rounded-md overflow-hidden relative">
         <Image
           src={getValidImageUrl(imageSrc)}
-          alt={plant.fullName}
+          alt={plant.scientificName}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 50vw"

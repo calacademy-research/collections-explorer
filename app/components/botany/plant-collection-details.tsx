@@ -28,14 +28,9 @@ export function PlantCollectionDetails({ plant }: PlantCollectionDetailsProps) {
       </h3>
 
       <div className="grid grid-cols-2 gap-y-4">
-        <div>
-          <p className="text-sm text-muted-foreground">Catalog Number</p>
-          <p className="font-medium">{plant.catalogNumber}</p>
-        </div>
-
-        <div>
-          <p className="text-sm text-muted-foreground">Alt. Catalog Number</p>
-          <p className="font-medium">{plant.altCatalogNumber}</p>
+        <div className="space-y-1">
+          <p className="text-sm text-muted-foreground">Bar Code</p>
+          <p className="font-medium">{plant.barCode}</p>
         </div>
 
         <div>
