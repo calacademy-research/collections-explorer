@@ -7,8 +7,8 @@ import ExploreSection from "@/components/ExploreSection";
 import SearchBar from '@/components/search-bar';
 import { useRouter } from 'next/navigation';
 import BackgroundImage from './components/BackgroundImage';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const collections = [
   { title: "Botany", href: "/botany" },

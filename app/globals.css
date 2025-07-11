@@ -154,3 +154,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide the Leaflet Draw finish/cancel (black square) button and toolbar actions */
+.leaflet-draw-actions {
+  display: none !important;
+}
+.leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
+  display: none !important;
+}

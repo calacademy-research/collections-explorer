@@ -1,5 +1,5 @@
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
 
 const BackgroundImage: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const BackgroundImage: React.FC = () => {
         alt="California Academy background"
         layout="fill"
         objectFit="cover"
-        className="z-0"
+        style={{ zIndex: 0 }}
       />
     </div>
   );
