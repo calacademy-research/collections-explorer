@@ -1,0 +1,36 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install Convex CLI globally
+RUN npm install -g convex
+
+# Copy package files
+COPY package*.json ./
+COPY yarn.lock ./
+
+# Install dependencies
+RUN yarn install --frozen-lockfile
+
+# Copy Convex configuration and functions
+COPY convex/ ./convex/
+COPY convex.json ./
+
+# Copy startup script
+COPY start-convex.sh ./
+
+# Create a directory for Convex data
+RUN mkdir -p /app/convex-data
+
+# Make startup script executable
+RUN chmod +x start-convex.sh
+
+# Set environment variables for Convex
+ENV CONVEX_DATA_DIR=/app/convex-data
+ENV NODE_ENV=production
+
+# Expose port 8000 (default Convex port)
+EXPOSE 8000
+
+# Start Convex using the startup script
+CMD ["./start-convex.sh"] 

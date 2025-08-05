@@ -1,0 +1,48 @@
+# Build stage
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY yarn.lock ./
+
+# Install dependencies
+RUN yarn install --frozen-lockfile
+
+# Install missing leaflet packages
+RUN yarn add react-leaflet-draw leaflet-draw --legacy-peer-deps
+
+# Install TypeScript types for leaflet-draw
+RUN yarn add --dev @types/leaflet-draw
+
+# Copy source code
+COPY . .
+
+# Set environment variable for build
+ARG NEXT_PUBLIC_CONVEX_URL
+ENV NEXT_PUBLIC_CONVEX_URL=$NEXT_PUBLIC_CONVEX_URL
+
+# Build the application
+RUN yarn build
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy built application from builder stage
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/next.config.ts ./
+
+# Install only production dependencies
+RUN yarn install --production --frozen-lockfile
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start Next.js server
+CMD ["yarn", "start"] 

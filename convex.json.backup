@@ -1,0 +1,6 @@
+{
+  "selfHosted": {
+    "url": "http://localhost:8000",
+    "deploymentKey": "cas-collections-explorer-self-hosted"
+  }
+}

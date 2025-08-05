@@ -1,0 +1,6 @@
+{
+  "project": "cas-collections-explorer",
+  "team": "self-hosted",
+  "prodUrl": "http://127.0.0.1:3210",
+  "functions": "convex/"
+} 
